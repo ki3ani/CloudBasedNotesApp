@@ -78,3 +78,4 @@ yarn start # OR npm run start
   > Make sure you turn on the "Show hidden files, folders and disks" option.
 - `git init`
 # lestakenotes
+# lestakenotes
