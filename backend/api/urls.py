@@ -10,5 +10,14 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('register/', views.RegisterView.as_view(), name='auth_register'),
     path('test/', views.testEndPoint, name='test'),
-    path('', views.getRoutes)
+    path('', views.getRoutes),
+
+
+    #Notes
+    path('notes/', views.getNotes, name="notes"),
+    path('notes/<int:pk>/', views.getNote, name="note"),
+    path('notes/<int:pk>/update/', views.updateNote, name="update-note"),
+    path('notes/<int:pk>/delete/', views.deleteNote, name="delete-note"),
+    path('notes/mynotes/', views.getMyNotes, name="mynotes"),
+    path('notes/create/', views.createNote, name="create-blog"),
 ]
