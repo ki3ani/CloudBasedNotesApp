@@ -69,4 +69,8 @@ class NoteSerializer(serializers.ModelSerializer):
         validated_data['user'] = self.context['request'].user
         return super().update(instance, validated_data)
     
-    
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'bio', 'cover_photo']
+        read_only_fields = ['username', 'email']

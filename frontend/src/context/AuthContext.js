@@ -53,7 +53,8 @@ export const AuthProvider = ({ children }) => {
       body: JSON.stringify({
         username,
         password,
-        password2
+        password2,
+
       })
     });
     if (response.status === 201) {
@@ -70,6 +71,7 @@ export const AuthProvider = ({ children }) => {
     history.push("/");
   };
 
+
   const contextData = {
     user,
     setUser,
@@ -77,7 +79,7 @@ export const AuthProvider = ({ children }) => {
     setAuthTokens,
     registerUser,
     loginUser,
-    logoutUser
+    logoutUser,
   };
 
   useEffect(() => {

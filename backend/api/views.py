@@ -10,7 +10,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from .models import CustomUser
 from .models import Note
-from .serializer import NoteSerializer
+from .serializer import NoteSerializer, ProfileSerializer
 
 
 # Create your views here.
@@ -39,10 +39,14 @@ def getRoutes(request):
         'api/note/<int:pk>/delete/',
         'api/note/mynotes/',
         'api/note/create/',
+        'api/profile/',
+        'api/profile/update/',
+
     ]
     return Response(routes)
 
 
+#api/test
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def testEndPoint(request):
@@ -55,7 +59,7 @@ def testEndPoint(request):
         return Response({'response': data}, status=status.HTTP_200_OK)
     return Response({}, status.HTTP_400_BAD_REQUEST)
 
-#Notes
+#api/notes
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getNotes(request):
@@ -64,6 +68,8 @@ def getNotes(request):
     return Response(serializer.data)
 
 
+
+#api/notes/<int:pk>
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getNote(request, pk):
@@ -72,6 +78,7 @@ def getNote(request, pk):
     return Response(serializer.data)
 
 
+#api/notes/<int:pk>/update
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateNote(request, pk):
@@ -81,7 +88,7 @@ def updateNote(request, pk):
         serializer.save()
     return Response(serializer.data)
 
-
+#api/notes/<int:pk>/delete
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def deleteNote(request, pk):
@@ -89,7 +96,7 @@ def deleteNote(request, pk):
     note.delete()
     return Response('Note was deleted')
 
-
+#api/notes/mynotes
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getMyNotes(request):
@@ -100,6 +107,7 @@ def getMyNotes(request):
 
 
 
+#api/notes/create
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def createNote(request):
@@ -113,4 +121,20 @@ def createNote(request):
     )
     serializer = NoteSerializer(note, many=False)
     return Response(serializer.data)
+
+
+#api/profile  and api/profile/update
+@api_view(['GET', 'PUT'])
+@permission_classes([IsAuthenticated])
+def getProfile(request):
+    user = request.user
+    if request.method == 'GET':
+        serializer = ProfileSerializer(user, many=False)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = ProfileSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response(serializer.data)
+    return Response({}, status.HTTP_400_BAD_REQUEST)
 

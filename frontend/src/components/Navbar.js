@@ -15,7 +15,7 @@ const Navbar = () => {
               <Link to="/protected" className="mx-4 text-white hover:text-gray-200">Protected Page</Link>
               <Link to="/notes" className="mx-4 text-white hover:text-gray-200">Notes</Link>
               <Link to="/profile" className="mx-4 text-white hover:text-gray-200">Profile</Link>
-              <Link to={`/notes/${user.id}`} className="mx-4 text-white hover:text-gray-200">My Notes</Link>
+              <Link to={`/notes/myNotes`} className="mx-4 text-white hover:text-gray-200">My Notes</Link>
               <button onClick={logoutUser} className="bg-white text-blue-500 py-2 px-4 rounded-lg hover:bg-gray-200">Logout</button>
             </>
           ) : (

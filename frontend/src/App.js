@@ -7,8 +7,12 @@ import PrivateRoute from "./utils/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
 import Home from "./views/homePage";
 import Login from "./views/loginPage";
-import Register from "./views/registerPage";
+import Register from "./views/Register";
 import ProtectedPage from "./views/ProtectedPage";
+import Notes from "./views/allNotes";
+import MyNotes from "./views/myNotes";
+import Profile from "./views/Profile";
+
 
 function App() {
   return (
@@ -18,6 +22,12 @@ function App() {
           <Navbar />
           <Switch>
             <PrivateRoute component={ProtectedPage} path="/protected" exact />
+            <PrivateRoute component={Notes} path="/notes" exact />
+            <PrivateRoute component={MyNotes} path="/notes/myNotes" exact />
+            <PrivateRoute component={Profile} path="/profile" exact />
+
+            
+
             <Route component={Login} path="/login" />
             <Route component={Register} path="/register" />
             <Route component={Home} path="/" />
