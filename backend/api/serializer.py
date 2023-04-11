@@ -72,5 +72,4 @@ class NoteSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'bio', 'cover_photo']
-        read_only_fields = ['username', 'email']
+        fields = '__all__'

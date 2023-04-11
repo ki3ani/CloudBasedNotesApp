@@ -8,8 +8,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
-from .models import CustomUser
-from .models import Note
+from .models import Note, CustomUser
 from .serializer import NoteSerializer, ProfileSerializer
 
 
@@ -106,7 +105,6 @@ def getMyNotes(request):
     return Response(serializer.data)
 
 
-
 #api/notes/create
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -114,7 +112,7 @@ def createNote(request):
     user = request.user
     data = request.data
     note = Note.objects.create(
-        user=user,
+           user=user,
         title=data['title'],
         body=data['body'],
         cover_image=data['cover_image']
@@ -124,17 +122,18 @@ def createNote(request):
 
 
 #api/profile  and api/profile/update
-@api_view(['GET', 'PUT'])
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getProfile(request):
     user = request.user
-    if request.method == 'GET':
-        serializer = ProfileSerializer(user, many=False)
-        return Response(serializer.data)
-    elif request.method == 'PUT':
-        serializer = ProfileSerializer(user, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        return Response(serializer.data)
-    return Response({}, status.HTTP_400_BAD_REQUEST)
+    serializer = ProfileSerializer(user, many=False)
+    return Response(serializer.data)
 
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def updateProfile(request):
+    user = request.user
+    serializer = ProfileSerializer(user, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)

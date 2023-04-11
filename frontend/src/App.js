@@ -11,7 +11,8 @@ import Register from "./views/Register";
 import ProtectedPage from "./views/ProtectedPage";
 import Notes from "./views/allNotes";
 import MyNotes from "./views/myNotes";
-import Profile from "./views/Profile";
+import ProfilePage from "./views/Profile";
+import UpdateProfilePage from "./views/updateProfile";
 
 
 function App() {
@@ -24,7 +25,8 @@ function App() {
             <PrivateRoute component={ProtectedPage} path="/protected" exact />
             <PrivateRoute component={Notes} path="/notes" exact />
             <PrivateRoute component={MyNotes} path="/notes/myNotes" exact />
-            <PrivateRoute component={Profile} path="/profile" exact />
+            <PrivateRoute component={ProfilePage} path="/profile" exact />
+            <PrivateRoute component={UpdateProfilePage}path="/update" exact />
 
             
 

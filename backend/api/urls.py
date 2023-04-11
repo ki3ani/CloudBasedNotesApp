@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+
+
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
@@ -15,7 +17,10 @@ urlpatterns = [
 
 
     #Profile
-    path('profile/', views.getProfile, name="profile"),
+    path('profile/', views.getProfile, name='profile'),
+    path('profile/update/', views.updateProfile, name='update-profile'),
+
+
 
 
     #Notes
