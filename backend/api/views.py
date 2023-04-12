@@ -62,10 +62,11 @@ def testEndPoint(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getNotes(request):
-    notes = request.user.notes.all().order_by('-updated')
+    public_notes = Note.objects.filter(is_public=True).order_by('-updated')
+    user_notes = request.user.notes.all().order_by('-updated')
+    notes = public_notes | user_notes
     serializer = NoteSerializer(notes, many=True)
     return Response(serializer.data)
-
 
 
 #api/notes/<int:pk>

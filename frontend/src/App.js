@@ -5,14 +5,15 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PrivateRoute from "./utils/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
-import Home from "./views/homePage";
 import Login from "./views/loginPage";
 import Register from "./views/Register";
-import ProtectedPage from "./views/ProtectedPage";
-import Notes from "./views/allNotes";
-import MyNotes from "./views/myNotes";
 import ProfilePage from "./views/Profile";
 import UpdateProfilePage from "./views/updateProfile";
+import getMyNotes from "./views/getMyNotes";
+import getNote from "./views/getNote";
+import GetNotes from "./views/getNotes";
+import HomeAuth from "./views/HomeAuth";
+import HomeNonAuth from "./views/HomeNonAuth";
 
 
 function App() {
@@ -22,17 +23,17 @@ function App() {
         <AuthProvider>
           <Navbar />
           <Switch>
-            <PrivateRoute component={ProtectedPage} path="/protected" exact />
-            <PrivateRoute component={Notes} path="/notes" exact />
-            <PrivateRoute component={MyNotes} path="/notes/myNotes" exact />
+            <PrivateRoute component={HomeAuth} path="/" exact />
             <PrivateRoute component={ProfilePage} path="/profile" exact />
             <PrivateRoute component={UpdateProfilePage}path="/update" exact />
+            <PrivateRoute component={getMyNotes} path="/mynotes" exact />
+            <PrivateRoute component={getNote} path="/notes/:id" exact />
+            <PrivateRoute component={GetNotes} path="/notes" exact />
 
             
-
+            <Route component={HomeNonAuth} path="/welcome" exact />
             <Route component={Login} path="/login" />
             <Route component={Register} path="/register" />
-            <Route component={Home} path="/" />
           </Switch>
         </AuthProvider>
         <Footer />
