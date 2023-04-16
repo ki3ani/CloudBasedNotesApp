@@ -16,7 +16,13 @@ const Navbar = () => {
       </div>
       {user && (
         <div className="flex items-center">
+          <Link to="/profile" className="mr-4">
+            Profile
+          </Link>
           <Link to="/notes" className="mr-4">
+            Notes
+          </Link>
+          <Link to="/mynotes" className="mr-4">
             My Notes
           </Link>
           <button

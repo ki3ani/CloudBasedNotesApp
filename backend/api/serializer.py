@@ -69,7 +69,10 @@ class NoteSerializer(serializers.ModelSerializer):
         validated_data['user'] = self.context['request'].user
         return super().update(instance, validated_data)
     
+
 class ProfileSerializer(serializers.ModelSerializer):
+    notes = NoteSerializer(many=True, read_only=True)
+
     class Meta:
         model = CustomUser
         fields = '__all__'

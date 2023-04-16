@@ -37,7 +37,7 @@ def getRoutes(request):
         'api/note/<int:pk>/update/',
         'api/note/<int:pk>/delete/',
         'api/note/mynotes/',
-        'api/note/create/',
+        'api/notes/create/',
         'api/profile/',
         'api/profile/update/',
 
@@ -62,8 +62,8 @@ def testEndPoint(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getNotes(request):
-    public_notes = Note.objects.filter(is_public=True).order_by('-updated')
-    user_notes = request.user.notes.all().order_by('-updated')
+    public_notes = Note.objects.filter(is_public=True).order_by('-updated')[:10]
+    user_notes = request.user.notes.all().order_by('-updated')[:10]
     notes = public_notes | user_notes
     serializer = NoteSerializer(notes, many=True)
     return Response(serializer.data)
@@ -83,10 +83,12 @@ def getNote(request, pk):
 @permission_classes([IsAuthenticated])
 def updateNote(request, pk):
     note = request.user.notes.get(id=pk)
-    serializer = NoteSerializer(instance=note, data=request.data)
+    serializer = NoteSerializer(instance=note, data=request.data, context={'request': request})
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
+
+
 
 #api/notes/<int:pk>/delete
 @api_view(['DELETE'])
@@ -95,15 +97,6 @@ def deleteNote(request, pk):
     note = request.user.notes.get(id=pk)
     note.delete()
     return Response('Note was deleted')
-
-#api/notes/mynotes
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def getMyNotes(request):
-    user = request.user
-    notes = Note.objects.filter(user=user)
-    serializer = NoteSerializer(notes, many=True)
-    return Response(serializer.data)
 
 
 #api/notes/create
@@ -130,11 +123,20 @@ def getProfile(request):
     serializer = ProfileSerializer(user, many=False)
     return Response(serializer.data)
 
-@api_view(['PATCH'])
+@api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateProfile(request):
     user = request.user
     serializer = ProfileSerializer(user, data=request.data, partial=True)
     if serializer.is_valid():
         serializer.save()
+    return Response(serializer.data)
+
+#my notes
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getMyNotes(request):
+    user = request.user
+    notes = Note.objects.filter(user=user)
+    serializer = NoteSerializer(notes, many=True)
     return Response(serializer.data)

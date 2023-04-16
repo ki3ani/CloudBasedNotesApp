@@ -13,7 +13,7 @@ class CustomUser(AbstractUser):
 
 # This is the model for the notes
 class Note(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name='notes')
     title = models.CharField(max_length=100, null=True, blank=True)
     cover_image = models.ImageField(upload_to='images', null=True, blank=True)
     body = models.TextField(null=True, blank=True)

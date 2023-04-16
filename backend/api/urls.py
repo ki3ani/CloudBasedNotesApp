@@ -28,6 +28,6 @@ urlpatterns = [
     path('notes/<int:pk>/', views.getNote, name="note"),
     path('notes/<int:pk>/update/', views.updateNote, name="update-note"),
     path('notes/<int:pk>/delete/', views.deleteNote, name="delete-note"),
-    path('notes/mynotes/', views.getMyNotes, name="mynotes"),
-    path('notes/create/', views.createNote, name="create-blog"),
+    path('notes/mynotes',views.getMyNotes, name="my-notes"),
+    path('notes/create/', views.createNote, name="create-note"),
 ]
