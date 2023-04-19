@@ -4,6 +4,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import CustomUser, Note
+from django.core.validators import FileExtensionValidator
 
 
 
@@ -29,6 +30,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         required=True,
         validators=[UniqueValidator(queryset=CustomUser.objects.all())]
     )
+    cover_photo = serializers.ImageField(validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png']),], required=False)
 
     class Meta:
         model = CustomUser
@@ -38,27 +40,31 @@ class RegisterSerializer(serializers.ModelSerializer):
         if attrs['password'] != attrs['password2']:
             raise serializers.ValidationError(
                 {"password": "Password fields didn't match."})
+        if 'cover_photo' in attrs and attrs['cover_photo'] is not None and attrs['cover_photo'].size > 1024 * 1024:
+            raise serializers.ValidationError(
+                {"cover_photo": "The file size must be less than 1 MB."})
 
         return attrs
 
     def create(self, validated_data):
+        cover_photo = validated_data.get('cover_photo')
         user = CustomUser.objects.create(
             username=validated_data['username'],
             email=validated_data['email'],
             bio=validated_data['bio'],
-            cover_photo=validated_data['cover_photo']
-        )
-
+            cover_photo=cover_photo
+    )
         user.set_password(validated_data['password'])
         user.save()
-
+        
         return user
 
-
 class NoteSerializer(serializers.ModelSerializer):
+    cover_image = serializers.ImageField(validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])])
+    
     class Meta:
         model = Note
-        fields = '__all__'
+        fields = ['id', 'title', 'body', 'cover_image', 'user', 'created', 'updated']
         read_only_fields = ('user', 'created', 'updated')
 
     def create(self, validated_data):

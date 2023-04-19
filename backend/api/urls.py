@@ -12,13 +12,13 @@ urlpatterns = [
     path('token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('register/', views.RegisterView.as_view(), name='auth_register'),
-    path('test/', views.testEndPoint, name='test'),
     path('', views.getRoutes),
 
 
     #Profile
     path('profile/', views.getProfile, name='profile'),
     path('profile/update/', views.updateProfile, name='update-profile'),
+    
 
 
 
@@ -28,6 +28,6 @@ urlpatterns = [
     path('notes/<int:pk>/', views.getNote, name="note"),
     path('notes/<int:pk>/update/', views.updateNote, name="update-note"),
     path('notes/<int:pk>/delete/', views.deleteNote, name="delete-note"),
-    path('notes/mynotes',views.getMyNotes, name="my-notes"),
+    path('users/<int:pk>/notes',views.getUserNotes, name="my-notes"),
     path('notes/create/', views.createNote, name="create-note"),
 ]

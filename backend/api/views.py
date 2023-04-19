@@ -14,11 +14,11 @@ from .serializer import NoteSerializer, ProfileSerializer
 
 # Create your views here.
 
-
+#Login User
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-
+#Register User
 class RegisterView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     permission_classes = (AllowAny,)
@@ -32,7 +32,7 @@ def getRoutes(request):
         '/api/register/',
         '/api/token/refresh/',
         '/api/prediction/'
-        'api/note/',
+        'api/notes/',
         'api/note/<int:pk>/',
         'api/note/<int:pk>/update/',
         'api/note/<int:pk>/delete/',
@@ -40,23 +40,10 @@ def getRoutes(request):
         'api/notes/create/',
         'api/profile/',
         'api/profile/update/',
+        'api/users/<int:pk>/notes',
 
     ]
     return Response(routes)
-
-
-#api/test
-@api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticated])
-def testEndPoint(request):
-    if request.method == 'GET':
-        data = f"Congratulation {request.user}, your API just responded to GET request"
-        return Response({'response': data}, status=status.HTTP_200_OK)
-    elif request.method == 'POST':
-        text = request.POST.get('text')
-        data = f'Congratulation your API just responded to POST request with text: {text}'
-        return Response({'response': data}, status=status.HTTP_200_OK)
-    return Response({}, status.HTTP_400_BAD_REQUEST)
 
 #api/notes
 @api_view(['GET'])
@@ -132,11 +119,12 @@ def updateProfile(request):
         serializer.save()
     return Response(serializer.data)
 
-#my notes
+
+#api/notes/user/<int:pk>/mynotes
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def getMyNotes(request):
-    user = request.user
+def getUserNotes(request, pk):
+    user = CustomUser.objects.get(id=pk)
     notes = Note.objects.filter(user=user)
     serializer = NoteSerializer(notes, many=True)
     return Response(serializer.data)
