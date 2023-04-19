@@ -9,7 +9,6 @@ import Login from "./views/loginPage";
 import Register from "./views/Register";
 import ProfilePage from "./views/Profile";
 import UpdateProfilePage from "./views/updateProfile";
-import MyNotes from "./views/getMyNotes";
 import GetNotes from "./views/GetNotes";
 import HomeAuth from "./views/HomeAuth";
 import HomeNonAuth from "./views/HomeNonAuth";
@@ -27,7 +26,6 @@ function App() {
             <PrivateRoute component={HomeAuth} path="/" exact />
             <PrivateRoute component={ProfilePage} path="/profile" exact />
             <PrivateRoute component={UpdateProfilePage}path="/update" exact />
-            <PrivateRoute component={MyNotes} path="/mynotes" exact />
             <PrivateRoute component={GetNotes} path="/notes" exact />
             <PrivateRoute component={NoteForm} path="/notes/:id/edit" exact />
             <PrivateRoute component={NoteDetail} path="/notes/:id/" exact />

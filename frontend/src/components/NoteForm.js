@@ -57,7 +57,7 @@ function NoteForm({ setNotes = () => {} }) {
     try {
       let response;
       if (id) {
-        response = await axios.put(
+        response = await axios.patch(
           `${API_ENDPOINT}/api/notes/${id}/update/`,
           formData
         );

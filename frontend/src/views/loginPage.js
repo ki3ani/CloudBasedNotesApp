@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
 const LoginPage = () => {
@@ -21,6 +22,14 @@ const LoginPage = () => {
         <input type="password" id="password" placeholder="Enter Password" />
         <button type="submit">Login</button>
       </form>
+      <div className="mt-4">
+        <p>Don't have an account yet?</p>
+        <Link to="/welcome">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Sign Up
+          </button>
+        </Link>
+      </div>
     </section>
   );
 };

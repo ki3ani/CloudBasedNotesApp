@@ -22,9 +22,6 @@ const Navbar = () => {
           <Link to="/notes" className="mr-4">
             Notes
           </Link>
-          <Link to="/mynotes" className="mr-4">
-            My Notes
-          </Link>
           <button
             onClick={logoutUser}
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"

@@ -66,7 +66,7 @@ def getNote(request, pk):
 
 
 #api/notes/<int:pk>/update
-@api_view(['PUT'])
+@api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def updateNote(request, pk):
     note = request.user.notes.get(id=pk)
@@ -110,7 +110,7 @@ def getProfile(request):
     serializer = ProfileSerializer(user, many=False)
     return Response(serializer.data)
 
-@api_view(['PUT'])
+@api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def updateProfile(request):
     user = request.user
