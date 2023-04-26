@@ -1,3 +1,3 @@
 // config.js
 
-export const API_ENDPOINT = 'http://localhost:8000';
+export const API_ENDPOINT = 'http://shiv_backend_1:8000';

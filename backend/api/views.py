@@ -120,6 +120,7 @@ def updateProfile(request):
     return Response(serializer.data)
 
 
+
 #api/notes/user/<int:pk>/mynotes
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
